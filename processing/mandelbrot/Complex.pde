@@ -19,10 +19,11 @@ class Complex{
   Complex add(Complex a){
     return new Complex(new PVector(v.x+a.v.x,v.y+a.v.y));
   }
-  Complex conjugate(){
-    return new Complex(new PVector(v.x,-v.y));
-  }
   Complex transpose(float a){
     return new Complex(new PVector(v.x,v.y*a));
+  }
+  Complex e(){
+    float ex = exp(this.v.x);
+    return new Complex(ex*cos(this.v.y),ex*sin(this.v.y));
   }
 }

@@ -1,75 +1,68 @@
-boolean julia = true;
-boolean tricorn = true;
-float increment = 0.05;
-int n = 2;
-float k = 2;
-int max = 50;
-Complex v = new Complex(new PVector(0, 0));
-Complex t = new Complex(new PVector(0, 0));
-float ji = 0;
-float ti = 0;
-float con = 0;
-int resolution = 1;
-int p = 3;
-float depth = 5;
+boolean julia = false;                              // is julia set (true/false)
+int n = 2;                                          // exponent of the fractal
+float k = 2;                                        // logarithmic color power
+int max = 50;                                       // maximum iterations
+float zoom = 1;                                     // zoom magnitude
+Complex constant = new Complex(new PVector(0, 0));  // constant for julia set
+Complex transpose = new Complex(new PVector(0, 0)); // transpose for both numbers
+PVector offset = new PVector(0, 0);                 // offset for the graph
+int p = 3;                                          // decimal places for file name            
+float ji = 0;                                       // incrementation for constant
+float ti = 0;                                       // incrementation for transpose 1
+float con = 0;                                      // incrementation for transpose 2
+float increment = 0.05;                             // incrementation for zoom
 
-PImage img;
+// DO NOT TOUCH FROM HERE ON ---------------------------------------------------------
+
 String path;
 float state = 1;
-PVector offset = new PVector(0, 0);
+float depth = 5/zoom;
 void setup() {
-  size(400, 400);
+  size(800, 450);
   colorMode(HSB, 1);
 }
 void draw() {
-  img = createImage(width*resolution,height*resolution, RGB);
-  v.t += ji;
-  if (v.t >= TWO_PI-ji &&  v.t <= TWO_PI+ji) {
-    v.r += ji;
+  constant.t += ji;
+  if (constant.t >= TWO_PI-ji &&  constant.t <= TWO_PI+ji) {
+    constant.r += ji;
   }
-  v = new Complex(v.r, v.t);
-  t.v.x += ti;
-  t.v.y += con;
-  t = new Complex(t.v);
+  constant = new Complex(constant.r, constant.t);
+  transpose.v.x += ti;
+  transpose.v.y += con;
+  transpose = new Complex(transpose.v);
   background(255);
-  img.loadPixels();
-  PVector[] range = {new PVector(-depth/2, -depth/2/img.width*img.height).add(offset), new PVector(depth/2, depth/2/width*height).add(offset)};
-  float[] res = {(range[1].x - range[0].x)/img.width, (range[1].y - range[0].y)/img.height};
+  loadPixels();
+  PVector[] range = {new PVector(-depth/2, -depth/2/width*height).add(offset), new PVector(depth/2, depth/2/width*height).add(offset)};
+  float[] res = {(range[1].x - range[0].x)/width, (range[1].y - range[0].y)/height};
   float y = range[0].y;
-  for (int j = 0; j < img.height; j++) {
+  for (int j = 0; j < height; j++) {
     float x = range[0].x;
-    for (int i = 0; i < img.width; i++) {
+    for (int i = 0; i < width; i++) {
       Complex z = new Complex(new PVector(0, 0));
       Complex c = new Complex(new PVector(x, y));
       if (julia) {
         z = new Complex(new PVector(x, y));
-        c = new Complex(v.r, v.t);
+        c = new Complex(constant.r, constant.t);
       }
-      c = c.transpose(-cos(t.v.y));
+      c = c.transpose(-cos(transpose.v.y));
       int iters = 0;
       while (iters < max) {
-        if (tricorn) {
-          z = z.transpose(-cos(t.v.x)).raise(n).add(c);
-        } else {
-          z = z.transpose(cos(t.v.x)).raise(n).add(c);
-        }
+        z = z.transpose(cos(transpose.v.x)).raise(n).add(c);
         if (pow(z.v.x, n) + pow(z.v.y, n) > pow(4.0, n)) {
           break;
         }
         iters++;
       }
       if (iters == max) {
-        img.pixels[i+j*img.width] = color(0);
+        pixels[i+j*width] = color(0);
       } else {
-        img.pixels[i+j*img.width] = color(1-pow((float(iters) / max), pow(k, -1)), 1-pow((float(iters) / max), pow(k, -1)), pow((float(iters) / max), pow(k, -1)));
+        pixels[i+j*width] = color(1-pow((float(iters) / max), pow(k, -1)), 1-pow((float(iters) / max), pow(k, -1)), pow((float(iters) / max), pow(k, -1)));
       }
       x += res[0];
     }
     y += res[1];
   }
-  img.updatePixels();
-  image(img,width,height);
-  println(frameRate);
+  updatePixels();
 }
 void mousePressed() {
   state += increment;
@@ -84,18 +77,16 @@ void keyPressed() {
     if (julia) {
       fractal = "Julia";
     }
-    if (tricorn) {
-      fractal +=" Tricorn";
-    }
     path = fractal+" Set for z^"+n+" @ "+round(5.0/depth, p)+"x";
     if (julia) {
-      path += " C["+round(v.v.x, p)+','+round(v.v.y, p)+']';
+      path += " C["+round(constant.v.x, p)+','+round(constant.v.y, p)+']';
     }
-    if (t.r < 0) {
-      path += " T["+round(t.v.x, p)+','+round(t.v.y, p)+']';
+    if (transpose.r < 0) {
+      path += " T["+round(transpose.v.x, p)+','+round(transpose.v.y, p)+']';
     }
     path += " O["+round(offset.x, p)+','+round(offset.y, p)+']';
-    saveFrame("fractals/"+path+".png");
+    saveFrame("Image/Fractals/"+path+".png");
+    println(path);
   }
 }
 
