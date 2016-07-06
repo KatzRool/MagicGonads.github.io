@@ -12,12 +12,12 @@ To get a higher resolution image:
 
 1. Open "Image.pde" inside the "Image" folder
 2. Put the data in the old image's name into the settings:
-	name describes if its julia and/or tricorn or not.
-	value following the '^' is n.
-	value before the 'x' is zoom.
+	Describes if its julia or mandelbrot.
+	Value following the '^' is n.
+	Value before the 'x' is zoom.
 	C[] is constant.
 	T[] is transpose.
 	O[] is offset.
 3. 'resolution' multiplies the old resolution.
 4. Increase 'max' to get a crisper image
-5. run the program and wait until 'Complete!'
+5. Run the program and wait until 'Complete!'
