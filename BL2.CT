@@ -26231,7 +26231,7 @@ LuaCall(findKeyBase())
       </CheatEntries>
     </CheatEntry>
     <CheatEntry>
-      <ID>6318</ID>
+      <ID>6319</ID>
       <Description>"Console Enabler"</Description>
       <LastState Activated="0"/>
       <Color>80000008</Color>
@@ -26240,7 +26240,7 @@ LuaCall(findKeyBase())
 aobscan(dev, 58 01 04 28)
 label(_dev)
 registersymbol(_dev)
-aobscan(say, 73 00 61 00 79)
+aobscan(say, 73 00 61 00 79 00 20 00 00 00 00 00)
 label(_say)
 registersymbol(_say)
 
@@ -26250,14 +26250,14 @@ db 58 01 04 27
 
 say:
 _say:
-db 00 00 61 00 79
+db 00 00 61 00 79 00 20 00 00 00 00 00
 
 [DISABLE]
 _dev:
 db 58 01 04 28
 
 _say:
-db 73 00 61 00 79
+db 73 00 61 00 79 00 20 00 00 00 00 00
 
 unregistersymbol(_dev)
 unregistersymbol(_say)
