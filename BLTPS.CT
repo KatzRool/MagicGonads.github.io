@@ -10873,7 +10873,7 @@ LuaCall(HeroLevelRecalculate())
             <CheatEntry>
               <ID>3877</ID>
               <Description>"Gravity"</Description>
-              <LastState Value="??" Activated="0" RealAddress="05CB0798"/>
+              <LastState Value="0" Activated="0" RealAddress="05CB0798"/>
               <Color>80000008</Color>
               <VariableType>Float</VariableType>
               <Address>5CB0798</Address>
@@ -17660,7 +17660,7 @@ unregistersymbol(DisSayAOB)
                 <CheatEntry>
                   <ID>2</ID>
                   <Description>"Say String"</Description>
-                  <LastState Activated="0" RealAddress="00000000"/>
+                  <LastState Activated="0" RealAddress="02BA7244"/>
                   <Color>80000008</Color>
                   <VariableType>String</VariableType>
                   <Length>3</Length>
@@ -17702,7 +17702,7 @@ unregistersymbol(pBase)
                 <CheatEntry>
                   <ID>7133</ID>
                   <Description>"Body Class Death Definition"</Description>
-                  <LastState Value="??" Activated="0" RealAddress="05C96218"/>
+                  <LastState Value="0" Activated="0" RealAddress="05C96218"/>
                   <Color>80000008</Color>
                   <VariableType>4 Bytes</VariableType>
                   <Address>5C96218</Address>
@@ -17766,7 +17766,7 @@ unregistersymbol(pBase)
                 <CheatEntry>
                   <ID>7141</ID>
                   <Description>"Population Den Base"</Description>
-                  <LastState Value="??" Activated="0" RealAddress="060A6918"/>
+                  <LastState Value="0" Activated="0" RealAddress="060A6918"/>
                   <Color>80000008</Color>
                   <VariableType>4 Bytes</VariableType>
                   <Address>60A6918</Address>
@@ -17790,7 +17790,7 @@ unregistersymbol(pBase)
                 <CheatEntry>
                   <ID>7144</ID>
                   <Description>"Pawn Balance Base"</Description>
-                  <LastState Value="??" Activated="0" RealAddress="05C92D98"/>
+                  <LastState Value="0" Activated="0" RealAddress="05C92D98"/>
                   <Color>80000008</Color>
                   <VariableType>4 Bytes</VariableType>
                   <Address>5C92D98</Address>
@@ -17806,7 +17806,7 @@ unregistersymbol(pBase)
                 <CheatEntry>
                   <ID>9433</ID>
                   <Description>"Shift Update/Account Info"</Description>
-                  <LastState Value="??" Activated="0" RealAddress="05C46718"/>
+                  <LastState Value="0" Activated="0" RealAddress="05C46718"/>
                   <Color>80000008</Color>
                   <VariableType>4 Bytes</VariableType>
                   <Address>5C46718</Address>
@@ -18151,15 +18151,37 @@ LuaCall(LootSplosionUpdate(true))
       </CheatEntries>
     </CheatEntry>
     <CheatEntry>
-      <ID>9440</ID>
-      <Description>"Console Say"</Description>
-      <LastState Activated="0" RealAddress="00000000"/>
+      <ID>9442</ID>
+      <Description>"Console Enable"</Description>
+      <LastState Activated="0"/>
       <Color>80000008</Color>
-      <VariableType>String</VariableType>
-      <Length>3</Length>
-      <Unicode>1</Unicode>
-      <ZeroTerminate>1</ZeroTerminate>
-      <Address>BorderlandsPreSequel.exe+1984000</Address>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(dev, 58 01 04 28)
+label(_dev)
+registersymbol(_dev)
+aobscan(say, ?? 00 61 00 79 00 20 00 00 00 00 00)
+label(_say)
+registersymbol(_say)
+
+dev:
+_dev:
+db 58 01 04 27
+
+say:
+_say:
+db 00 00 61 00 79 00 20 00 00 00 00 00
+
+[DISABLE]
+_dev:
+db 58 01 04 28
+
+_say:
+db 73 00 61 00 79 00 20 00 00 00 00 00
+
+unregistersymbol(_dev)
+unregistersymbol(_say)
+</AssemblerScript>
     </CheatEntry>
   </CheatEntries>
   <CheatCodes>
