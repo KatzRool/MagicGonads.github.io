@@ -26231,24 +26231,37 @@ LuaCall(findKeyBase())
       </CheatEntries>
     </CheatEntry>
     <CheatEntry>
-      <ID>6316</ID>
-      <Description>"Console Block (Set to blank)"</Description>
-      <LastState Activated="0" RealAddress="02E6630C"/>
+      <ID>6318</ID>
+      <Description>"Console Enabler"</Description>
+      <LastState Activated="0"/>
       <Color>80000008</Color>
-      <VariableType>String</VariableType>
-      <Length>3</Length>
-      <Unicode>1</Unicode>
-      <ZeroTerminate>1</ZeroTerminate>
-      <Address>Borderlands2.exe+1B9630C</Address>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>6317</ID>
-      <Description>"Developer Access (Set to 27)"</Description>
-      <LastState Value="27" Activated="0" RealAddress="14631DE9"/>
-      <ShowAsHex>1</ShowAsHex>
-      <Color>80000008</Color>
-      <VariableType>Byte</VariableType>
-      <Address>14631DE9</Address>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(dev, 58 01 04 28)
+label(_dev)
+registersymbol(_dev)
+aobscan(say, 73 00 61 00 79)
+label(_say)
+registersymbol(_say)
+
+dev:
+_dev:
+db 58 01 04 27
+
+say:
+_say:
+db 00 00 61 00 79
+
+[DISABLE]
+_dev:
+db 58 01 04 28
+
+_say:
+db 73 00 61 00 79
+
+unregistersymbol(_dev)
+unregistersymbol(_say)
+</AssemblerScript>
     </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols/>
