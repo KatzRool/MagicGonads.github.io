@@ -27772,10 +27772,11 @@ function SploAdvanceDisable()
   unregisterSymbol("LootMidgetEnemy")
 end
 
-BaseParts = '"Borderlands2.exe"+1CB34A0'
-BasePartList = '"Borderlands2.exe"+1C728E0'
-BasePartsI = '"Borderlands2.exe"+1CA7AE0'
-BasePartListI = '"Borderlands2.exe"+1C72A30'
+BaseParts = '"Borderlands2.exe"+1CCC020'
+BasePartList = '"Borderlands2.exe"+1C8B168'
+BasePartsI = '"Borderlands2.exe"+1C9F1C8'
+BasePartListI = '"Borderlands2.exe"+1C8B400'
+StringBase = '["Borderlands2.exe"+1E873C4]'
 PartListTable = {}
 PartTable = {}
 PartListTableI = {}
