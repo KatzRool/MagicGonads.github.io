@@ -12826,6 +12826,64 @@ LuaCall(ItemPartSwap())
               </CheatEntries>
             </CheatEntry>
             <CheatEntry>
+              <ID>4999</ID>
+              <Description>"UVHM Min Level Override"</Description>
+              <LastState Activated="0"/>
+              <Color>80000008</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+"Borderlands2.exe"+8DD28E:
+db 83 FE 01
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+"Borderlands2.exe"+8DD28E:
+db 83 FE 32
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>4997</ID>
+              <Description>"UVHM Max Level Override"</Description>
+              <LastState Activated="0"/>
+              <Color>80000008</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+mov ecx,[Borderlands2.nFringePFO+F16C]
+mov eax,#9000
+
+exit:
+jmp returnhere
+
+"Borderlands2.exe"+D1B1F8:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"Borderlands2.exe"+D1B1F8:
+mov ecx,[Borderlands2.nFringePFO+F16C]
+//Alt: db 8B 0D B4 F0 12 03
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
               <ID>2739</ID>
               <Description>"Item Colors (BGR)"</Description>
               <Options moHideChildren="1"/>
@@ -12963,6 +13021,70 @@ unregistersymbol(ColorPoint)
                   </Offsets>
                 </CheatEntry>
                 <CheatEntry>
+                  <ID>6310</ID>
+                  <Description>"Black"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>80000008</Color>
+                  <VariableType>Array of byte</VariableType>
+                  <ByteLength>3</ByteLength>
+                  <Address>ColorPoint</Address>
+                  <Offsets>
+                    <Offset>88</Offset>
+                    <Offset>280</Offset>
+                    <Offset>84</Offset>
+                    <Offset>144</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>6311</ID>
+                  <Description>"Health/Red"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>80000008</Color>
+                  <VariableType>Array of byte</VariableType>
+                  <ByteLength>3</ByteLength>
+                  <Address>ColorPoint</Address>
+                  <Offsets>
+                    <Offset>98</Offset>
+                    <Offset>280</Offset>
+                    <Offset>84</Offset>
+                    <Offset>144</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>6312</ID>
+                  <Description>"Peach (Turtle Up)"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>80000008</Color>
+                  <VariableType>Array of byte</VariableType>
+                  <ByteLength>3</ByteLength>
+                  <Address>ColorPoint</Address>
+                  <Offsets>
+                    <Offset>A8</Offset>
+                    <Offset>280</Offset>
+                    <Offset>84</Offset>
+                    <Offset>144</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>6313</ID>
+                  <Description>"Money"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>80000008</Color>
+                  <VariableType>Array of byte</VariableType>
+                  <ByteLength>3</ByteLength>
+                  <Address>ColorPoint</Address>
+                  <Offsets>
+                    <Offset>B8</Offset>
+                    <Offset>280</Offset>
+                    <Offset>84</Offset>
+                    <Offset>144</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
                   <ID>2750</ID>
                   <Description>"Pearl"</Description>
                   <LastState Value="??" Activated="0" RealAddress="00000000"/>
@@ -12994,7 +13116,99 @@ unregistersymbol(ColorPoint)
                     <Offset>144</Offset>
                   </Offsets>
                 </CheatEntry>
+                <CheatEntry>
+                  <ID>6314</ID>
+                  <Description>"Special White"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>80000008</Color>
+                  <VariableType>Array of byte</VariableType>
+                  <ByteLength>3</ByteLength>
+                  <Address>ColorPoint</Address>
+                  <Offsets>
+                    <Offset>E8</Offset>
+                    <Offset>280</Offset>
+                    <Offset>84</Offset>
+                    <Offset>144</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>6315</ID>
+                  <Description>"Eridium Purple"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>80000008</Color>
+                  <VariableType>Array of byte</VariableType>
+                  <ByteLength>3</ByteLength>
+                  <Address>ColorPoint</Address>
+                  <Offsets>
+                    <Offset>F8</Offset>
+                    <Offset>280</Offset>
+                    <Offset>84</Offset>
+                    <Offset>144</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>6316</ID>
+                  <Description>"Eridium Purple"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>80000008</Color>
+                  <VariableType>Array of byte</VariableType>
+                  <ByteLength>3</ByteLength>
+                  <Address>ColorPoint</Address>
+                  <Offsets>
+                    <Offset>E8</Offset>
+                    <Offset>280</Offset>
+                    <Offset>84</Offset>
+                    <Offset>144</Offset>
+                  </Offsets>
+                </CheatEntry>
               </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>9449</ID>
+              <Description>"Disable Console Say"</Description>
+              <LastState Activated="0"/>
+              <Color>80000008</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+aobscan(say, ?? 00 61 00 79 00 20 00 00 00 00 00)
+label(_say)
+registersymbol(_say)
+
+say:
+_say:
+db 00 00 61 00 79 00 20 00 00 00 00 00
+
+[DISABLE]
+_say:
+db 73 00 61 00 79 00 20 00 00 00 00 00
+
+unregistersymbol(_say)
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>9450</ID>
+              <Description>"Enable Developer Commands"</Description>
+              <LastState Activated="0"/>
+              <Color>80000008</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+aobscan(dev, 58 01 04 28)
+label(_dev)
+registersymbol(_dev)
+
+dev:
+_dev:
+db 58 01 04 27
+
+[DISABLE]
+_dev:
+db 58 01 04 28
+
+unregistersymbol(_dev)
+</AssemblerScript>
             </CheatEntry>
           </CheatEntries>
         </CheatEntry>
@@ -24529,7 +24743,7 @@ LuaCall(findKeyBase())
             </CheatEntry>
             <CheatEntry>
               <ID>3541</ID>
-              <Description>"Target Health"</Description>
+              <Description>"Current Target Health"</Description>
               <LastState Value="??" Activated="0" RealAddress="00000000"/>
               <Color>80000008</Color>
               <VariableType>Float</VariableType>
@@ -24559,7 +24773,7 @@ LuaCall(findKeyBase())
             </CheatEntry>
             <CheatEntry>
               <ID>3546</ID>
-              <Description>"Target Shield"</Description>
+              <Description>"Current Target Shield"</Description>
               <LastState Value="??" Activated="0" RealAddress="00000000"/>
               <Color>80000008</Color>
               <VariableType>Float</VariableType>
@@ -24588,7 +24802,7 @@ LuaCall(findKeyBase())
               </Offsets>
             </CheatEntry>
             <CheatEntry>
-              <ID>6315</ID>
+              <ID>9447</ID>
               <Description>"Target Allegiance"</Description>
               <LastState Value="??" Activated="0" RealAddress="00000000"/>
               <ShowAsHex>1</ShowAsHex>
@@ -26161,7 +26375,7 @@ LuaCall(findKeyBase())
               </CheatEntries>
             </CheatEntry>
             <CheatEntry>
-              <ID>6311</ID>
+              <ID>9443</ID>
               <Description>"[Allegiance]"</Description>
               <Options moHideChildren="1"/>
               <LastState Value="" Activated="0" RealAddress="00000000"/>
@@ -26183,7 +26397,7 @@ LuaCall(findKeyBase())
                   </Offsets>
                 </CheatEntry>
                 <CheatEntry>
-                  <ID>6312</ID>
+                  <ID>9444</ID>
                   <Description>"Player 2"</Description>
                   <LastState Value="??" Activated="0" RealAddress="00000000"/>
                   <ShowAsHex>1</ShowAsHex>
@@ -26197,7 +26411,7 @@ LuaCall(findKeyBase())
                   </Offsets>
                 </CheatEntry>
                 <CheatEntry>
-                  <ID>6313</ID>
+                  <ID>9445</ID>
                   <Description>"Player 3"</Description>
                   <LastState Value="??" Activated="0" RealAddress="00000000"/>
                   <ShowAsHex>1</ShowAsHex>
@@ -26211,7 +26425,7 @@ LuaCall(findKeyBase())
                   </Offsets>
                 </CheatEntry>
                 <CheatEntry>
-                  <ID>6314</ID>
+                  <ID>9446</ID>
                   <Description>"Player 4"</Description>
                   <LastState Value="??" Activated="0" RealAddress="00000000"/>
                   <ShowAsHex>1</ShowAsHex>
@@ -26229,39 +26443,6 @@ LuaCall(findKeyBase())
           </CheatEntries>
         </CheatEntry>
       </CheatEntries>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>9442</ID>
-      <Description>"Console Enable"</Description>
-      <LastState Activated="0"/>
-      <Color>80000008</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>[ENABLE]
-aobscan(dev, 58 01 04 28)
-label(_dev)
-registersymbol(_dev)
-aobscan(say, ?? 00 61 00 79 00 20 00 00 00 00 00)
-label(_say)
-registersymbol(_say)
-
-dev:
-_dev:
-db 58 01 04 27
-
-say:
-_say:
-db 00 00 61 00 79 00 20 00 00 00 00 00
-
-[DISABLE]
-_dev:
-db 58 01 04 28
-
-_say:
-db 73 00 61 00 79 00 20 00 00 00 00 00
-
-unregistersymbol(_dev)
-unregistersymbol(_say)
-</AssemblerScript>
     </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols/>
@@ -27777,10 +27958,6 @@ BasePartList = '"Borderlands2.exe"+1C8B168'
 BasePartsI = '"Borderlands2.exe"+1C9F1C8'
 BasePartListI = '"Borderlands2.exe"+1C8B400'
 StringBase = '["Borderlands2.exe"+1E873C4]'
-PartListTable = {}
-PartTable = {}
-PartListTableI = {}
-PartTableI = {}
 
 
 function BaseAddressScan(Address,isHex,PBar)
@@ -27820,7 +27997,7 @@ end
 function GunPartSwap()
   GunMemorySetup()
   for k,v in pairs(PartListTable) do
-    for i=0,8 do
+    for i=7,7 do
       writeInteger(getAddress(v)+0x54+(0x10*i),getAddress("GunMem"))
       writeInteger(getAddress(v)+0x54+(0x10*i)+4,#PartTable)
       writeInteger(getAddress(v)+0x54+(0x10*i)+8,#PartTable)
