@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>30</ID>
+      <Description>"Cycle Stats Right To Unlock"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+aobscanmodule(CharUnlockAOB,castle.exe,8A 1C 0E 46 89 70 0C 80 FB 80 75 BA 8B 45 08 8B 4C 24 14) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov byte ptr [esi+ecx],80
+  mov bl,[esi+ecx]
+  inc esi
+  mov [eax+0C],esi
+  jmp return
+
+CharUnlockAOB:
+  jmp code
+  nop
+  nop
+return:
+registersymbol(CharUnlockAOB)
+
+[DISABLE]
+
+CharUnlockAOB:
+  db 8A 1C 0E 46 89 70 0C
+
+unregistersymbol(CharUnlockAOB)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>33</ID>
+      <Description>"Cycle Weapons Right To Unlock"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(WepUnlockAOB,castle.exe,81 79 04 00 00 00 80 74 09 E8 EE) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [ecx+c],1
+  cmp [ecx+04],80000000
+  jmp return
+
+WepUnlockAOB:
+  jmp code
+  nop
+  nop
+return:
+registersymbol(WepUnlockAOB)
+
+[DISABLE]
+WepUnlockAOB:
+  db 81 79 04 00 00 00 80
+
+unregistersymbol(WepUnlockAOB)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>76</ID>
+      <Description>"Cycle Animals Right To Unlock"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(WepUnlockAOB,castle.exe,81 79 04 00 00 00 80 74 09 E8 0E) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [ecx+c],1
+  cmp [ecx+04],80000000
+  jmp return
+
+WepUnlockAOB:
+  jmp code
+  nop
+  nop
+return:
+registersymbol(WepUnlockAOB)
+
+[DISABLE]
+WepUnlockAOB:
+  db 81 79 04 00 00 00 80
+
+unregistersymbol(WepUnlockAOB)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
