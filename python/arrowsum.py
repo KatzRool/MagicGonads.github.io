@@ -15,16 +15,17 @@ class arrow:
         else:
             while it[-1]==0 and len(it)>1:
                 del it[-1]
-        return it
-    def adv(self):
+        return arrow(list(it),self.s)
+    def adv(self,s):
         it = list(self.it)
         for i in range(len(it)):
-            it[i] += self[i+1]
-        return arrow(it).crop()
+            it[i] += s*self[i+1]
+        return arrow(it,self.s).crop()
     def sum(self,x):
         arrow = self
-        for i in range(x):
-            arrow = arrow.adv()
+        sgn = x/abs(x+(x==0))*self.s/abs(self.s+(self.s==0))
+        for i in range(int(abs(x/self.s))):
+            arrow = arrow.adv(sgn)
         return arrow
     @classmethod
     def func(cls,f,s=1,l=10):
@@ -38,7 +39,7 @@ class arrow:
             it+=[d[i+1](0,len(d)-1)]
         return cls(it,s)
     def __init__(self,it,s=1):
-        self.s = s
+        self.s = it.s if isinstance(it,arrow) else s
         try:
             it.__iter__
             self.it = list(it)
@@ -72,19 +73,19 @@ class arrow:
         it = arrow(other)
         for i in range(max(len(it),len(self))):
             it[i]+= self[i]
-        return arrow(it)
+        return arrow(it,self.s)
     __radd__ = __add__
     def __sub__(self,other):
         it = (-arrow(other)).it
         for i in range(max(len(it),len(self))):
             it[i]+= self[i]
-        return arrow(it)
+        return arrow(it,self.s)
     def __rsub__(self,other):
         it = (arrow(other)).it
         se = -arrow(self)
         for i in range(max(len(it),len(self))):
             it[i]+= self[i]
-        return arrow(it)
+        return arrow(it,self.s)
     def __mul__(self,other):
         ot = arrow(other)
         if len(self)+len(ot) != max(len(ot),len(self))+1:
@@ -93,7 +94,7 @@ class arrow:
         it = arrow((ot,self)[s])
         for i in range(len((ot,self)[s])):
             it[i]*= (self,ot)[s][0]
-        return arrow(it)
+        return arrow(it,self.s)
     __rmul__ = __mul__
     def __truediv__(self,other):
         ot = arrow(other)
@@ -103,7 +104,7 @@ class arrow:
         it = arrow(0)
         for i in range(len((ot,self)[s])):
             it[i] = self[(i,0)[s]]/ot[(i,0)[s]]
-        return arrow(it)
+        return arrow(it,self.s)
     def __rtruediv(self,other):
         ot = arrow(other)
         if len(self)+len(ot) != max(len(ot),len(self))+1:
@@ -112,7 +113,7 @@ class arrow:
         it = arrow(0)
         for i in range(len((ot,self)[s])):
             it[i] = ot[(i,0)[s]]/self[(i,0)[s]]
-        return arrow(it)
+        return arrow(it,self.s)
 ##    def sum(self):
 ##        def _sum(m,n,d,f):
 ##            return [j for j in [0] for x in list(range(int(min(m,n)/d+0.5),int(max(m,n)*d+1.5)))[::(1,-1)[m>n]] for j in [j+f(x*d)]][-1]
