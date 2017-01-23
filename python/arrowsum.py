@@ -7,8 +7,6 @@ def contsum(f,m=0,n=1,d=1):
 def invsum(f,m=0,n=1,d=1):
     return [j for j in [0] for x in list(range(int(min(m,n)/d+0.5),int(max(m,n)*d+1.5)))[::(1,-1)[m>n]] for j in [j+f(x*d)]]
 class arrow:
-    def _sum(m,n,d,f):
-        return [j for j in [0] for x in list(range(int(min(m,n)/d+0.5),int(max(m,n)*d+1.5)))[::(1,-1)[m>n]] for j in [j+f(x*d)]][-1]
     def crop(self,l=0):
         it = arrow(self.it)
         if l:
@@ -18,22 +16,16 @@ class arrow:
             while it[-1]==0 and len(it)>1:
                 del it[-1]
         return it
-    def sum(self):
-        it = self.crop()
-        l = len(it)
-        s = ''
-        b = 0
-        for i in list(range(1,l)):
-            if i == 1:
-                s+= str(it[i])
-            elif i == l-1:
-                s+= '+'+str(it[i])+'*x'+')'*b
-            else:
-                s+= '+arrow._sum(0,x-'+str(i)+','+str(self.s)+',lambda x:'+str(it[i])
-                b+=1
-        print(s)
-        print('lambda x'+': '+str(it[0])+'+arrow._sum(0,x-1,'+str(self.s)+',lambda x:'+s+'-0'+')')
-        return lambda x: it[0]+arrow._sum(0,x-1,self.s,eval('lambda x:'+s+'-0'))
+    def adv(self):
+        it = list(self.it)
+        for i in range(len(it)):
+            it[i] += self[i+1]
+        return arrow(it).crop()
+    def sum(self,x):
+        arrow = self
+        for i in range(x):
+            arrow = arrow.adv()
+        return arrow
     @classmethod
     def func(cls,f,s=1,l=10):
         d = [f]
@@ -121,3 +113,21 @@ class arrow:
         for i in range(len((ot,self)[s])):
             it[i] = ot[(i,0)[s]]/self[(i,0)[s]]
         return arrow(it)
+##    def sum(self):
+##        def _sum(m,n,d,f):
+##            return [j for j in [0] for x in list(range(int(min(m,n)/d+0.5),int(max(m,n)*d+1.5)))[::(1,-1)[m>n]] for j in [j+f(x*d)]][-1]
+##        it = self.crop()
+##        l = len(it)
+##        s = ''
+##        b = 0
+##        for i in list(range(1,l)):
+##            if i == 1:
+##                s+= str(it[i])
+##            elif i == l-1:
+##                s+= '+'+str(it[i])+'*x'+')'*b
+##            else:
+##                s+= '+_sum(0,x-'+str(i)+','+str(self.s)+',lambda x:'+str(it[i])
+##                b+=1
+##        print(s)
+##        print('lambda x'+': '+str(it[0])+'+_sum(0,x-1,'+str(self.s)+',lambda x:'+s+'-0'+')')
+##        return lambda x: it[0]+arrow._sum(0,x-1,self.s,eval('lambda x:'+s+'-0'))
