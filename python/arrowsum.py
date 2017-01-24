@@ -7,6 +7,7 @@ def contsum(f,m=0,n=1,d=1):
 def invsum(f,m=0,n=1,d=1):
     return [j for j in [0] for x in list(range(int(min(m,n)/d+0.5),int(max(m,n)*d+1.5)))[::(1,-1)[m>n]] for j in [j+f(x*d)]]
 class arrow:
+    depth = 10
     def crop(self,l=0):
         it = arrow(self.it)
         if l:
@@ -17,9 +18,13 @@ class arrow:
                 del it[-1]
         return arrow(list(it),self.s)
     def adv(self,s):
-        it = list(self.it)
-        for i in range(len(it)):
-            it[i] += s*self[i+1]
+        it = arrow(self.it)
+        l = len(it)
+        for i in range(l):
+            if abs(s)==s:
+                it[i] += s*it[i+1]
+            else:
+                it[l-i-1] += s*it[l-i]
         return arrow(it,self.s).crop()
     def sum(self,x):
         arrow = self
@@ -27,16 +32,48 @@ class arrow:
         for i in range(int(abs(x/self.s))):
             arrow = arrow.adv(sgn)
         return arrow
-    @classmethod
-    def func(cls,f,s=1,l=10):
-        d = [f]
-        it = [f(0)]
+    def order(self):
+        l = len(self)
+        it = arrow(self.it)
+        pol = []
         for i in range(l):
+            a = arrow.func(lambda x: x**(l-1-i),self.s).crop()
+            n = (it[l-i-1]/a[-1])
+            pol+=[n]
+            k = []
+            for i in range(len(a)):
+                it[i] -= n*a[i]
+        pol = pol[::-1]
+        return pol
+    def poly(self):
+        pol = arrow.order(self)
+        s = ''
+        l = len(pol)
+        for i in range(l):
+            if i>0 and pol[i]==abs(pol[i]):
+                s+='+'
+            s+= str(pol[i])
+            if i>0:
+                s+='*x'
+                if i>1:
+                    s+='**'+str(i)
+        return lambda x: eval(s)
+    @classmethod
+    def func(cls,f,s=1):
+        def _c(f,*a):
+            a = [str(x) for x in a]
+            try:
+                return eval('f('+','.join(a)+')')
+            except ZeroDivisionError:
+                return 0
+        d = [f]
+        it = [_c(f,0)]
+        for i in range(arrow.depth):
             if i:
-                d += [lambda x,j: d[j-1](x+s,j-1)-d[j-1](x,j-1)]
+                d += [lambda x,j: _c(d[j-1],x+s,j-1)-_c(d[j-1],x,j-1)]
             else:
-                d += [lambda x,j: d[0](x+s)-d[0](x)]
-            it+=[d[i+1](0,len(d)-1)]
+                d += [lambda x,j: _c(d[0],x+s)-_c(d[0],x)]
+            it+=[_c(d[i+1],0,len(d)-1)]
         return cls(it,s)
     def __init__(self,it,s=1):
         self.s = it.s if isinstance(it,arrow) else s
@@ -76,7 +113,7 @@ class arrow:
         return arrow(it,self.s)
     __radd__ = __add__
     def __sub__(self,other):
-        it = (-arrow(other)).it
+        it = -arrow(other)
         for i in range(max(len(it),len(self))):
             it[i]+= self[i]
         return arrow(it,self.s)
@@ -87,48 +124,29 @@ class arrow:
             it[i]+= self[i]
         return arrow(it,self.s)
     def __mul__(self,other):
-        ot = arrow(other)
-        if len(self)+len(ot) != max(len(ot),len(self))+1:
-            raise TypeError('Extra growth not supported')
-        s = len(self)>len(ot)
-        it = arrow((ot,self)[s])
-        for i in range(len((ot,self)[s])):
-            it[i]*= (self,ot)[s][0]
-        return arrow(it,self.s)
+        s = self.poly()
+        o = arrow(other).poly()
+        return arrow.func(lambda x: s(x)*o(x)).crop()
     __rmul__ = __mul__
     def __truediv__(self,other):
-        ot = arrow(other)
-        if len(self)+len(ot) != max(len(ot),len(self))+1:
-            raise TypeError('Extra growth not supported')
-        s = len(self)>len(ot)
-        it = arrow(0)
-        for i in range(len((ot,self)[s])):
-            it[i] = self[(i,0)[s]]/ot[(i,0)[s]]
-        return arrow(it,self.s)
-    def __rtruediv(self,other):
-        ot = arrow(other)
-        if len(self)+len(ot) != max(len(ot),len(self))+1:
-            raise TypeError('Extra growth not supported')
-        s = len(self)>len(ot)
-        it = arrow(0)
-        for i in range(len((ot,self)[s])):
-            it[i] = ot[(i,0)[s]]/self[(i,0)[s]]
-        return arrow(it,self.s)
-##    def sum(self):
-##        def _sum(m,n,d,f):
-##            return [j for j in [0] for x in list(range(int(min(m,n)/d+0.5),int(max(m,n)*d+1.5)))[::(1,-1)[m>n]] for j in [j+f(x*d)]][-1]
-##        it = self.crop()
-##        l = len(it)
-##        s = ''
-##        b = 0
-##        for i in list(range(1,l)):
-##            if i == 1:
-##                s+= str(it[i])
-##            elif i == l-1:
-##                s+= '+'+str(it[i])+'*x'+')'*b
-##            else:
-##                s+= '+_sum(0,x-'+str(i)+','+str(self.s)+',lambda x:'+str(it[i])
-##                b+=1
-##        print(s)
-##        print('lambda x'+': '+str(it[0])+'+_sum(0,x-1,'+str(self.s)+',lambda x:'+s+'-0'+')')
-##        return lambda x: it[0]+arrow._sum(0,x-1,self.s,eval('lambda x:'+s+'-0'))
+        s = self.poly()
+        o = arrow(other).poly()
+        return arrow.func(lambda x: s(x)/o(x)).crop()
+    def __rtruediv__(self,other):
+        s = self.poly()
+        o = arrow(other).poly()
+        return arrow.func(lambda x: o(x)/s(x)).crop()
+    def __pow__(self,other):
+        s = self.poly()
+        o = arrow(other).poly()
+        return arrow.func(lambda x: s(x)**o(x)).crop()
+    def __rpow__(self,other):
+        s = self.poly()
+        o = arrow(other).poly()
+        return arrow.func(lambda x: o(x)**s(x)).crop()
+    def __call__(self,func):
+        s = self.poly()
+        def fun(other):
+            o = arrow(other).poly()
+            return arrow.func(lambda x: func(s(x),o(x))).crop()
+        return fun
