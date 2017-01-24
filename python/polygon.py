@@ -21,3 +21,5 @@ def verticies(n=6,r=1,p=0):
     return [vertex(i,n,r,p) for i in range(n)]
 def area(n=6,r=1):
     return math.pi*r*r if n==0 else math.tan(math.pi/n)*n*r*r
+def angles(n=6):
+    return (n-2)*180
