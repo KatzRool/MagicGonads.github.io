@@ -33,11 +33,12 @@ class arrow:
             arrow = arrow.adv(sgn)
         return arrow
     def order(self):
-        l = len(self)
-        it = arrow(self.it)
+        s = self.crop()
+        l = len(s)
+        it = arrow(s.it)
         pol = []
         for i in range(l):
-            a = arrow.func(lambda x: x**(l-1-i),self.s).crop()
+            a = arrow.func(lambda x: x**(l-1-i),s.s).crop()
             n = (it[l-i-1]/a[-1])
             pol+=[n]
             k = []
@@ -75,6 +76,8 @@ class arrow:
                 d += [lambda x,j: _c(d[0],x+s)-_c(d[0],x)]
             it+=[_c(d[i+1],0,len(d)-1)]
         return cls(it,s)
+    def __call__(self,x):
+        return self.sum(x)[0]
     def __init__(self,it,s=1):
         self.s = it.s if isinstance(it,arrow) else s
         try:
@@ -136,6 +139,14 @@ class arrow:
         s = self.poly()
         o = arrow(other).poly()
         return arrow.func(lambda x: o(x)/s(x)).crop()
+    def __mod__(self,other):
+        s = self.poly()
+        o = arrow(other).poly()
+        return arrow.func(lambda x: s(x)%o(x)).crop()
+    def __rmod__(self,other):
+        s = self.poly()
+        o = arrow(other).poly()
+        return arrow.func(lambda x: s(x)%o(x)).crop()
     def __pow__(self,other):
         s = self.poly()
         o = arrow(other).poly()
@@ -144,7 +155,7 @@ class arrow:
         s = self.poly()
         o = arrow(other).poly()
         return arrow.func(lambda x: o(x)**s(x)).crop()
-    def __call__(self,func):
+    def op(self,func):
         s = self.poly()
         def fun(other):
             o = arrow(other).poly()
