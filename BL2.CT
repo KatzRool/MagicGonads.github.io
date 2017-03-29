@@ -13227,7 +13227,7 @@ db 83 C4 0C 85 FF 75 1A 6A
 
 [DISABLE]
 _set:
-db 83 C4 0C 85 FF 75 1A 6A
+db 83 C4 0C 85 C0 75 1A 6A
 
 unregistersymbol(_set)
 </AssemblerScript>
