@@ -23,3 +23,5 @@ def area(n=6,r=1):
     return math.pi*r*r if n==0 else math.tan(math.pi/n)*n*r*r
 def angles(n=6):
     return (n-2)*180
+def diagonals(n=6):
+    return n*(n-3)/2

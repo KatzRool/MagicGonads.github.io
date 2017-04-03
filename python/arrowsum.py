@@ -17,6 +17,8 @@ class arrow:
             while it[-1]==0 and len(it)>1:
                 del it[-1]
         return arrow(list(it),self.s)
+    def der(self):
+        return arrow(self[1:])
     def adv(self,s):
         it = arrow(self.it)
         l = len(it)
